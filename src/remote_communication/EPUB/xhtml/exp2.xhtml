@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" manifest="http://localhost/html-manifest">
+<head profile="http://localhost/head-profile">
+
+<!--
+%Base (check manually)
+-->
+<base href="http://localhost/base-href/" />
+
+<!--
+%MSIE Imports
+-->
+<IMPORT namespace="myNS" implementation="http://localhost/import-implementation-2" />
+
+<!--
+%Redirects
+-->
+<meta http-equiv="refresh" content="10; url=http://localhost/meta-refresh" />
+
+<!--
+%CSP
+-->
+<meta http-equiv="Content-Security-Policy" content="script-src 'self'; report-uri http://localhost/meta-csp-report-uri" />
+<meta http-equiv="Content-Security-Policy-Report-Only" content="script-src 'self'; report-uri http://localhost/meta-csp-report-uri-2" />
+
+
+<!--
+%AppLink Web Fallback
+-->
+<meta property="al:web:url" content="http://localhost/meta-property-al-web-url" />
+
+<!--
+%Pinned Websites
+-->
+<meta name="msapplication-config" content="http://localhost/meta-name-msa-config" />
+<meta name="msapplication-badge" content="frequency=30; polling-uri=http://localhost/meta-name-msa-badge" />
+<meta name="msapplication-notification" content="frequency=60;polling-uri=http://localhost/meta-name-msa-notification" />
+<meta name="msapplication-square150x150logo" content="http://localhost/meta-name-msa-logo-1" />
+<meta name="msapplication-square310x310logo" content="http://localhost/meta-name-msa-logo-2" />
+<meta name="msapplication-square70x70logo" content="http://localhost/meta-name-msa-logo-3" />
+<meta name="msapplication-wide310x150logo" content="http://localhost/meta-name-msa-logo-4" />
+<meta name="msapplication-task" content="name=Leak;action-uri=http://localhost/meta-name-msa-task;icon-uri=http://localhost/meta-name-msa-task-icon" />
+<meta name="msapplication-TileImage" content="http://localhost/meta-name-msa-tile-image" />
+
+<!--
+%Conditional Comments
+-->
+<!--[if true]>
+<link href="http://localhost/conditional-comment-1" rel="stylesheet">
+<![endif]-->
+
+<!--
+%Links
+-->
+<link rel="stylesheet" href="http://localhost/link-stylesheet" />
+<link rel="icon" href="http://localhost/link-icon" />
+<link rel="canonical" href="http://localhost/link-canonical" />
+<link rel="shortcut icon" href="http://localhost/link-shortcut-icon" />
+<link rel="import" href="http://localhost/link-import" />
+<link rel="dns-prefetch" href="http://localhost/link-dns-prefetch" />
+<link rel="preconnect" href="http://localhost/link-preconnect" />
+<link rel="prefetch" href="http://localhost/link-prefetch" />
+<link rel="preload" href="http://localhost/link-preload" />
+<link rel="prerender" href="http://localhost/link-prerender" />
+
+<link rel="preload" as="font" href="http://localhost/link-preload-as-font" />
+<link rel="preload" as="image" href="http://localhost/link-preload-as-image" />
+<link rel="preload" as="image" imagesrcset=",,,,,http://localhost/link-preload-imagesrcset" />
+<link rel="preload" as="style" href="http://localhost/link-preload-as-style" />
+<link rel="preload" as="script" href="http://localhost/link-preload-as-script" />
+
+<link rel="search" href="http://localhost/link-search" />
+<!--
+Note that OpenSearch description URLs are ignored in Chrome if this file isn't placed in the webroot.
+Also, in Chrome, you won't see the request in the developer tools because the request happens in the privileged browser process.
+Use a network sniffer to detect it.
+-->
+
+<link rel="alternate" href="http://localhost/link-alternate" />
+<link rel="alternate" type="application/atom+xml" href="http://localhost/link-alternate-atom" />
+<link rel="alternate stylesheet" href="http://localhost/link-alternate-stylesheet" />
+<link rel="amphtml" href="http://localhost/link-amphtml" />
+<link rel="appendix" href="http://localhost/link-appendix" />
+<link rel="apple-touch-icon-precomposed" href="http://localhost/link-apple-touch-icon-precomposed" />
+<link rel="apple-touch-icon" href="http://localhost/link-apple-touch-icon" />
+<link rel="apple-touch-startup-image" href="http://localhost/link-apple-touch-startup-image" />
+<link rel="archives" href="http://localhost/link-archives" />
+<link rel="author" href="http://localhost/link-author" />
+<link rel="bookmark" href="http://localhost/link-bookmark" />
+<link rel="canonical" href="http://localhost/link-canonical" />
+<link rel="chapter" href="http://localhost/link-chapter" />
+<link rel="chrome-webstore-item" href="http://localhost/link-chrome-webstore-item" />
+<link rel="contents" href="http://localhost/link-contents" />
+<link rel="copyright" href="http://localhost/link-copyright" />
+<link rel="entry-content" href="http://localhost/link-entry-content" />
+<link rel="external" href="http://localhost/link-external" />
+<link rel="feedurl" href="http://localhost/link-feedurl" />
+<link rel="first" href="http://localhost/link-first" />
+<link rel="glossary" href="http://localhost/link-glossary" />
+<link rel="help" href="http://localhost/link-help" />
+<link rel="index" href="http://localhost/link-index" />
+<link rel="last" href="http://localhost/link-last" />
+<link rel="manifest" href="http://localhost/link-manifest" />
+<link rel="mask-icon" href="http://localhost/link-mask-icon" color="red" />
+<link rel="next" href="http://localhost/link-next" />
+<link rel="offline" href="http://localhost/link-offline" />
+<link rel="P3Pv1" href="http://localhost/link-P3Pv1" />
+<link rel="pingback" href="http://localhost/link-pingback" />
+<link rel="prev" href="http://localhost/link-prev" />
+<link rel="publisher" href="http://localhost/link-publisher" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://localhost/link-search-2" title="Search" />
+<link rel="sidebar" href="http://localhost/link-sidebar" />
+<link rel="start" href="http://localhost/link-start" />
+<link rel="section" href="http://localhost/link-section" />
+<link rel="subsection" href="http://localhost/link-subsection" />
+<link rel="subresource" href="http://localhost/link-subresource" />
+<link rel="tag" href="http://localhost/link-tag" />
+<link rel="up" href="http://localhost/link-up" />
+
+<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+<title>Remote communication: HTTPLeaks</title>
+</head>
+
+<!--
+%Body Background
+-->
+<body background="http://localhost/body-background">
+    <h1>Remote communication: HTTPLeaks</h1>
+
+    This experiment leverages the <a href="https://github.com/cure53/HTTPLeaks">HTTPLeaks repository by cure53</a> to comprehensively evaluate whether communication with a remote server can be initiated.
+
+
+	<h2>Preparation</h2>
+
+    Upon loading this page, the EPUB reading system is instructed to send requests to a locally hosted web server (localhost), using a comprehensive set of mechanisms.
+    To detect these requests, a proxy or local web server should be set up, of which the logs can be consulted to determine whether the experiment was successful.
+
+
+	<h2>Experiment</h2>
+
+    [Use local proxy or web server to determine experiment results.]
+
+    <div></div>
+
+<!--
+%Links & Maps
+-->
+<a ping="http://localhost/a-ping" href="#">You have to click me</a>
+<img src="data:;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw" width="150" height="150" usemap="#map" />
+<map name="map">
+  <area ping="http://localhost/area-ping" shape="rect" coords="0,0,150,150" href="#" />
+</map>
+<!--
+The ping attribute allows to send a HTTP request to an external IP or domain,
+even if the link's HREF points somewhere else. The link has to be clicked though
+
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-ping
+-->
+
+<!--
+%Table Background
+-->
+<table background="http://localhost/table-background">
+    <tr>
+        <td background="http://localhost/td-background"></td>
+    </tr>
+</table>
+
+<!--
+%Images
+-->
+<img src="http://localhost/img-src" />
+<img dynsrc="http://localhost/img-dynsrc" />
+<img lowsrc="http://localhost/img-lowsrc" />
+<!--<img src="data:image/svg+xml,<svg%20xmlns='%68ttp:%2f/www.w3.org/2000/svg'%20xmlns:xlink='%68ttp:%2f/www.w3.org/1999/xlink'><image%20xlink:hr%65f='%68ttps:%2f/gjfr.dev/svg-via-data'></image></svg>">-->
+
+<image src="http://localhost/image-src" />
+<image href="http://localhost/image-href" />
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<image href="http://localhost/svg-image-href" />
+<image xlink:href="http://localhost/svg-image-xlink-href" />
+</svg>
+
+<picture>
+    <source srcset="http://localhost/picture-source-srcset" />
+</picture>
+<picture>
+    <img srcset="http://localhost/picture-img-srcset" />
+</picture>
+<img srcset=",,,,,http://localhost/img-srcset" />
+
+<img src="#" longdesc="http://localhost/img-longdesc" />
+<!-- longdesc works on Firefox but requires right-click, "View Description" -->
+
+
+</body>
+</html>

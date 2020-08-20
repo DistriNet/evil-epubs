@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8"/>
+	<title>Inferring local file presence through symbolic links</title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+	<style>
+		@font-face {
+			font-family: 'font1';
+			src: url(../links/etc/epub_test_file.ttf);
+		}
+		.font1 {
+			font-family: font1;
+		}
+	</style>
+</head>
+<body>
+    <h1>Inferring local file presence through symbolic folder links</h1>
+    <h2>MacOS and Linux</h2>
+    <p>
+        This experiment tries to infer whether certain files exist on the local file system, leveraging symbolic links.
+        Note that this experiment is only available for UNIX systems, since we could not find a way to
+        For this, several manual preparatory steps are necessary, as explained below.
+        When these are completed, reload the EPUB.
+    </p>
+
+    <h3>Preparation</h3>
+    <p>
+        To prepare for these experiments, save the associated files in the repository resources folder to the following locations:
+        <ul>
+            <li>/etc/epub_test_file.html</li>
+            <li>/etc/epub_test_file.png</li>
+            <li>/etc/epub_test_file.txt</li>
+            <li>/etc/epub_test_file.log</li>
+            <li>/etc/epub_test_file.bogus</li>
+            <li>/etc/epub_test_file.mp3</li>
+            <li>/etc/epub_test_file.mp4</li>
+        </ul>
+
+    </p>
+
+    <h3>Experiment</h3>
+
+    In each of the following sections, a web mechanism is used in an attempt to render a local file.
+    If a rendition of the referred resource is visible, the EPUB reading system allows an EPUB to render that particular local file.
+    Additionally, the text "Success" indicates whether this is also detectable through JavaScript.
+
+    <div>
+		<h5>Iframe - html</h5>
+		<iframe onload="loaded(this);" src="../links/etc/epub_test_file.html"></iframe>
+	</div>
+
+	<div>
+		<h5>Image - png</h5>
+		<img onload="loaded(this);" src="../links/etc/epub_test_file.png"/>
+	</div>
+
+	<div>
+		<h5>Iframe - txt</h5>
+		<iframe onload="loaded(this);" src="../links/etc/epub_test_file.txt"></iframe>
+	</div>
+
+	<div>
+		<h5>Iframe - log</h5>
+		<iframe onload="loaded(this);" src="../links/etc/epub_test_file.log"></iframe>
+	</div>
+
+	<div>
+		<h5>Iframe - bogus</h5>
+		<iframe onload="loaded(this);" src="../links/etc/epub_test_file.bogus"></iframe>
+	</div>
+
+	<div>
+		<h5>Audio - .mp3</h5>
+		<audio id="audio" oncanplaythrough="loaded(this);" controls="true" canplaythrough="loaded(this);" src="../links/etc/epub_test_file.mp3">
+			Your browser does not support the audio tag.
+		</audio>
+	</div>
+
+	<div>
+		<h5>Video - .mp4</h5>
+		<video oncanplaythrough="loaded(this);" width="320" height="240" controls="true" onload="loaded(this);" src="../links/etc/epub_test_file.mp4">
+			Your browser does not support the video tag.
+		</video>
+	</div>
+
+	<div>
+		<h5>Font - .ttf</h5>
+		<p id="font" class="font1">This is written in another font.</p>
+		<p id="font-test-result"></p>
+	</div>
+
+	<script>
+		//<![CDATA[
+		function loaded(elem) {
+			if (elem.tagName == "iframe") {
+				if (elem.contentDocument.body.innerHTML == "") {
+					return;
+				}
+			}
+			var p = document.createElement("p");
+			p.innerHTML = "Success";
+			p.style = "color: green;";
+			elem.parentElement.appendChild(p);
+		}
+
+		function doesFontExist() {
+		    var canvas = document.createElement("canvas");
+		    var context = canvas.getContext("2d");
+		    var text = "Dit is een test string 123456789!?.";
+
+		    // Fallback font
+		    context.font = "72px monospace";
+		    var fallback_size = context.measureText(text).width;
+
+			// Font to be tested
+		    context.font = "72px font1, monospace";
+			var font_size = context.measureText(text).width;
+			context.fillText(text, 10, 100);
+
+		    canvas = null;
+
+			var p = document.getElementById("font-test-result");
+			console.log(fallback_size + " =?= " + font_size);
+		    if (fallback_size == font_size) {
+		        p.innerHTML = "Not loaded";
+		    } else {
+				p.innerHTML = "Success";
+				p.style = "color:green;";
+		    }
+		}
+
+		window.onload = doesFontExist;
+		//]]>
+	</script>
+</body>
+</html>

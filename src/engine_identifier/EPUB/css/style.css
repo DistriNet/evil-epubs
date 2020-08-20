@@ -1,0 +1,10 @@
+table, th, td {
+  border: 1px solid black;
+}
+
+#progress_box{
+    width: 10px;
+    height: 10px;
+    float: right;
+    border: 1px solid;
+}
