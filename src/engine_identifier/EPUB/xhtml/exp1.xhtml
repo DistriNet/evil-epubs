@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Engine Identifier</title>
+    <link rel="stylesheet" href="../css/style.css"></link>
+    <script src="../js/main.js"></script>
+    <script src="../js/version_set.js"></script>
+    <script src="../js/apis.js"></script>
+    <script src="../js/html_elements.js"></script>
+    <script src="../js/bigint.min.js"></script>
+    <script src="../js/fingerprints.js"></script>
+    <script src="../js/check_fingerprint.js"></script>
+</head>
+<body>
+    <h1>Engine Identifier</h1>
+
+    In this experiment, the underlying browser engine of the EPUB reading system is identified by comparing the supported HTML elements and attributes, and JavaScript APIs to those of known browser engines.
+    This comparison is based on the hamming distance between the EPUB reading system fingerprint and the known browser engine fingerprints.
+
+
+	<h2>Experiment</h2>
+
+
+    <div id="progress_box">
+    </div>
+
+    <div>
+        <table id="browser_table">
+        </table>
+    </div>
+
+    <h5>Browser engine fingerprint:</h5>
+    <div id="fingerprint">
+    </div>
+
+    <h5>Best matching browser engines:</h5>
+    <div id="best_fingerprints">
+    </div>
+
+    <h5>User-agent string:</h5>
+    <div id="user-agent">
+    </div>
+
+    <div id="data" style="visibility: hidden">
+    </div>
+
+    <div id="log" style="visibility: hidden">
+    </div>
+
+    <div id="progress">
+    </div>
+
+</body>
+</html>

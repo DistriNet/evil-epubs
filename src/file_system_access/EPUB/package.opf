@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="uid">
+   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:identifier id="uid">evil-epub:file-system-access</dc:identifier>
+      <dc:title>File system access</dc:title>
+      <dc:language>en</dc:language>
+   </metadata>
+   <manifest>
+      <!-- HTML -->
+      <item href="xhtml/titlepage.xhtml" id="tp" media-type="application/xhtml+xml" properties="scripted remote-resources"/>
+      <item href="xhtml/nav.xhtml" id="nav" media-type="application/xhtml+xml" properties="nav"/>
+      <item href="xhtml/exp1-unix.xhtml" id="ex1-unix" media-type="application/xhtml+xml" properties="scripted remote-resources"/>
+      <item href="xhtml/exp1-win.xhtml" id="ex1-win" media-type="application/xhtml+xml" properties="scripted remote-resources"/>
+      <item href="xhtml/exp2-unix.xhtml" id="ex2-unix" media-type="application/xhtml+xml" properties="scripted remote-resources"/>
+      <item href="xhtml/exp3-unix.xhtml" id="ex3-unix" media-type="application/xhtml+xml" properties="scripted remote-resources"/>
+      <item href="xhtml/exp4.xhtml" id="ex4" media-type="application/xhtml+xml" properties="scripted remote-resources"/>
+      <item href="xhtml/exp5.xhtml" id="ex5" media-type="application/xhtml+xml" properties="scripted remote-resources"/>
+      <item href="xhtml/exp6.xhtml" id="ex6" media-type="application/xhtml+xml" properties="scripted remote-resources"/>
+      <!-- CSS -->
+      <item href="css/style.css" media-type="text/css" id="css"/>
+      <!-- Scripts -->
+      <!-- Images -->
+      <item href="img/idpflogo_web_125.jpg" media-type="image/jpeg" id="logo"/>
+      <item href="img/epub_logo_color.jpg" media-type="image/jpeg" id="ci" properties="cover-image"/>
+   </manifest>
+   <spine>
+      <itemref idref="tp"/>
+      <itemref idref="nav"/>
+      <itemref idref="ex1-unix"/>
+      <itemref idref="ex1-win"/>
+      <itemref idref="ex2-unix"/>
+      <itemref idref="ex3-unix"/>
+      <itemref idref="ex4"/>
+      <itemref idref="ex5"/>
+      <itemref idref="ex6"/>
+   </spine>
+</package>

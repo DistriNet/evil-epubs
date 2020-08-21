@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8"/>
+	<title>Feature APIs</title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+</head>
+<body>
+
+	<h1>Feature APIs</h1>
+
+    Nowadays, websites can request the browser for additional capabilities, such as requesting the user's location (GeoLocation API), or access to their computer's microphone or camera (MediaDevices API).
+
+	In this experiment, the EBUB attempts to access those capabilities, which might require explicit user consent.
+
+
+	<h2>Experiment</h2>
+
+
+    <div></div>
+
+	<h4>Geo location</h4>
+
+	<p id="feature_geolocation">Not available</p>
+
+	<h4>Mircophone</h4>
+
+	<p id="feature_microphone">Not available</p>
+
+	<h4>Camera</h4>
+
+	<p id="feature_camera">Not available</p>
+
+	<script>
+		//<![CDATA[
+		// Camera
+		try {
+		    if (navigator.mediaDevices != undefined) {
+		        navigator.mediaDevices.getUserMedia({ video: true })
+		        .then(function() {
+		            document.getElementById("feature_camera").innerHTML = "Permission granted";
+		        })
+		        .catch(function(err) {
+		            document.getElementById("feature_camera").innerHTML = "ERROR: " + err.message;
+		        })
+		    } else {
+		        document.getElementById("feature_camera").innerHTML = "MediaDevices not available";
+		    }
+		} catch(err) {
+		    document.getElementById("feature_camera").innerHTML = "ERROR: " + err.message;
+		}
+
+		// Microphone
+		try {
+		    if (navigator.mediaDevices != undefined) {
+		        navigator.mediaDevices.getUserMedia({ audio: true })
+		        .then(function() {
+		            document.getElementById("feature_microphone").innerHTML = "Permission granted";
+		        })
+		        .catch(function(err) {
+		            document.getElementById("feature_microphone").innerHTML = "ERROR: " + err.message;
+		        })
+		    } else {
+		        document.getElementById("feature_microphone").innerHTML = "MediaDevices not available";
+		    }
+		} catch(err) {
+		    document.getElementById("feature_microphone").innerHTML = "ERROR: " + err.message;
+		}
+
+		// Geo location
+		try {
+		    navigator.geolocation.getCurrentPosition(function(position) {
+		      document.getElementById("feature_geolocation").innerHTML = "Received coordinates: " + position.coords.latitude + ", " + position.coords.longitude;
+		  });
+		} catch(err) {
+		    document.getElementById("feature_geolocation").innerHTML = "ERROR: " + err.message;
+		}
+		//]]>
+	</script>
+	<script src="../js/script.js"></script>
+</body>
+</html>

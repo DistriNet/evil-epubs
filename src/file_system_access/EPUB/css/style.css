@@ -1,0 +1,25 @@
+table, th, td {
+  border: 1px solid black;
+}
+iframe {
+    width: 200px;
+    height: 50px;
+}
+img {
+    width: 100px;
+    height: 100px;
+}
+ol {
+  counter-reset: item;
+  list-style-type: lower-alpha;
+}
+ul {
+    list-style-type: circle;
+}
+ol > li {
+  display: block
+}
+ol > li:before {
+  content: counters(item, ".") " ";
+  counter-increment: item;
+}

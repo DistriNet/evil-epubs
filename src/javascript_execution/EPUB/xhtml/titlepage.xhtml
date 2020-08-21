@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8"/>
+	<title>JavaScript Execution</title>
+</head>
+<body>
+	<h1 class="title">JavaScript Execution</h1>
+
+	<p>
+		This EPUB is used to detect the execution of JavaScript.
+		It is bare-bones such that EPUB reading system that do only support a small subset of JavaScript functionality will still able to correctly render this EPUB.
+	</p>
+
+	<h2>Detection</h2>
+
+	The table below indicates whether the included JavaScript (both inline and external) was executed.
+	Furthermore, it prints the navigator.appVersion and navigator.epubReadingSystem values.
+
+    <div id="js-detection-table">
+		<table>
+		    <tr>
+		        <th>Resource</th>
+		        <th>Support</th>
+		    </tr>
+		    <tr>
+		        <th>JavaScript support (inline)</th>
+		        <th id="js-inline-entry">Not executed</th>
+		    </tr>
+			<tr>
+		        <th>JavaScript support (external)</th>
+		        <th id="js-external-entry">Not executed</th>
+		    </tr>
+			<tr>
+		        <th>navigator.appVersion</th>
+		        <th id="js-appversion-entry"></th>
+		    </tr>
+			<tr>
+		        <th>navigator.epubReadingSystem</th>
+		        <th id="js-readingsystem-entry"></th>
+		    </tr>
+		</table>
+	</div>
+
+	<div id="logs">
+	</div>
+
+	<script>
+		//<![CDATA[
+		try {
+			var js_entry = document.getElementById("js-inline-entry");
+	        js_entry.innerHTML = "Executed";
+	        js_entry.style.color = "green";
+
+			var version_entry = document.getElementById("js-appversion-entry");
+	        version_entry.innerHTML = navigator.appVersion;
+
+			var readingsystem_entry = document.getElementById("js-readingsystem-entry");
+			if (navigator.epubReadingSystem != 'undefined') {
+				readingsystem_entry.innerHTML = navigator.epubReadingSystem;
+			}
+		} catch(err) {
+			alert("ERROR: " + err.message);
+			var logs = document.getElementById("logs");
+			var log = document.createElement("p");
+			log.innerHTML = err.message;
+			logs.appendChild(log);
+		}
+		//]]>
+    </script>
+	<script src="../js/script.js"></script>
+</body>
+</html>

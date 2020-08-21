@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+	<head>
+		<meta charset="utf-8" />
+		<title>Evil epub - Table of Contents</title>
+		<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+	</head>
+	<body>
+		<nav epub:type="toc" id="toc">
+			<h1 class="title">Table of Contents</h1>
+
+			<ol>
+				<li id="ttl"><a href="titlepage.xhtml">File System Access</a></li>
+				<li id="nav"><a href="nav.xhtml">Table of Contents</a></li>
+				<li id="exp1-unix"><a href="exp1-unix.xhtml">Inferring local file presence through absolute file:// paths</a></li>
+				<ol>
+					<li id="exp1-unix"><a href="exp1-unix.xhtml">MacOS and Linux</a></li>
+					<li id="exp1-win"><a href="exp1-win.xhtml">Windows</a></li>
+				</ol>
+				<li id="exp2-unix"><a href="exp2-unix.xhtml">Inferring local file presence through symbolic file links</a></li>
+				<li id="exp3-unix"><a href="exp3-unix.xhtml">Inferring local file presence through symbolic folder links</a></li>
+				<li id="exp4"><a href="exp4.xhtml">File content leaking through XHR and Fetch API</a></li>
+				<li id="exp5"><a href="exp5.xhtml">Audio and video content leaking through XHR and Fetch API</a></li>
+				<li id="exp6"><a href="exp6.xhtml">File presence checking through timing attacks</a></li>
+			</ol>
+		</nav>
+
+		<nav epub:type="landmarks" hidden="">
+			<h2>Guide</h2>
+			<ol>
+				<li><a epub:type="toc" href="#toc">Table of Contents</a></li>
+			</ol>
+		</nav>
+
+	</body>
+</html>

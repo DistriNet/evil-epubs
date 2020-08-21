@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="uid">
+   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:identifier id="uid">evil-epub:remote-communication</dc:identifier>
+      <dc:title>Remote Communication</dc:title>
+      <dc:language>en</dc:language>
+      <meta property="dcterms:modified">2020-01-01T00:00:00Z</meta>
+   </metadata>
+   <manifest>
+      <!-- HTML -->
+      <item href="xhtml/titlepage.xhtml" id="tp" media-type="application/xhtml+xml"/>
+      <item href="xhtml/nav.xhtml" id="nav" media-type="application/xhtml+xml" properties="nav"/>
+      <item href="xhtml/exp1.xhtml" id="exp1" media-type="application/xhtml+xml" properties="remote-resources"/>
+      <item href="xhtml/exp2.xhtml" id="exp2" media-type="application/xhtml+xml" properties="svg remote-resources"/>
+      <!-- Scripts -->
+      <!-- CSS -->
+      <item href="css/style.css" media-type="text/css" id="css"/>
+   </manifest>
+   <spine>
+      <itemref idref="tp"/>
+      <itemref idref="nav" linear="no"/>
+      <itemref idref="exp1"/>
+      <itemref idref="exp2"/>
+   </spine>
+</package>

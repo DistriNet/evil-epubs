@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8"/>
+	<title>URI handles</title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+</head>
+<body>
+
+	<h1>URI handles</h1>
+
+    Not only can URIs include a reference to the requested resource, they can also refer to a requested application to open this resource.
+	In this experiment, the EPUB will try to open various applications by leveraging specific URIs.
+
+	Each part of the experiment will have to be started manually by clicking the associated button or link.
+	Note that these actions can be automated through JavaScript, but are simply made manual for reasons of usability.
+
+
+	<h2>Experiment</h2>
+
+    <div></div>
+
+	<p id="js_exec">Not executed</p>
+
+    <p>Call a number (tel:+123456789)</p>
+
+	<button style="width: 250px" onclick="do_navigation(this, 'tel:+123456789');">Test</button>
+
+	<a href="tel:+123456789">-------LINK-------</a>
+
+
+    <p>Send message (message:+123456789)</p>
+
+    <button style="width: 250px" onclick="do_navigation(this, 'message:+123456789');">Test</button>
+
+	<a href="message:+123456789">-------LINK-------</a>
+
+
+    <p>Send mail (mailto:dev.null@unknown.abc)</p>
+
+    <button style="width: 250px" onclick="do_navigation(this, 'mailto:dev.null@unknown.abc');">Test</button>
+
+	<a href="mailto:dev.null@unknown.abc">-------LINK-------</a>
+
+
+    <p>Open Twitter (twitter://GJFR_)</p>
+
+    <button style="width: 250px" onclick="do_navigation(this, 'twitter://GJFR_');">Test</button>
+
+	<a href="twitter://GJFR_">-------LINK-------</a>
+
+
+    <p>Open eBay (eBay://item/view?id=360703170135)</p>
+
+    <button style="width: 250px" onclick="do_navigation(this, 'eBay://item/view?id=360703170135');">Test</button>
+
+	<a href="eBay://item/view?id=360703170135">-------LINK-------</a>
+
+
+    <p>Open browser (https://github.com/DistriNet/evil-epubs)</p>
+
+    <button style="width: 250px" onclick="do_navigation(this, 'https://github.com/DistriNet/evil-epubs');">Test</button>
+
+	<a href="https://github.com/DistriNet/evil-epubs">-------LINK-------</a>
+
+
+	<script>
+		//<![CDATA[
+		function navigate(w, url) {
+		  var a = w.document.createElement('a');
+		  a.href = url;
+		  a.click();
+		}
+
+		function do_navigation(button, url) {
+            navigate(window, url);
+            button.innerHTML += " - Done";
+        }
+		//]]>
+	</script>
+	<script src="../js/script.js"></script>
+</body>
+</html>
