@@ -16,22 +16,23 @@ if [ $# -gt 2 ]; then
     echo "Warning: extra arguments are ignored"
 fi
 
-if [ ! -d $src_dir ]; then
+if [ ! -d "$src_dir" ]; then
     echo "Error: directory '$src_dir' does not exist"
     exit
 fi
 
-if [ ! -d $dst_dir ]; then
+if [ ! -d "$dst_dir" ]; then
     echo "Error: directory '$dst_dir' does not exist"
     exit
 fi
 
+set -e
 pwd=$PWD
-cd $src_dir
-zip -X0 $dst_dir/$name.zip mimetype
-zip -Xr --symlinks $dst_dir/$name.zip META-INF EPUB
-mv $dst_dir/$name.zip $dst_dir/$name.epub
-cd $pwd
+cd "$src_dir"
+zip -X0 "$dst_dir/$name.zip" mimetype
+zip -Xr --symlinks "$dst_dir/$name.zip" META-INF EPUB
+mv "$dst_dir/$name.zip" "$dst_dir/$name.epub"
+cd "$pwd"
 
 for dir in ./*/; do
     if [[ $dir =~ epubcheck-[0-9.]+ ]]; then
@@ -40,8 +41,8 @@ for dir in ./*/; do
     fi
 done
 
-if [ -f $epubcheck_dir/epubcheck.jar ]; then
-    java -jar $epubcheck_dir/epubcheck.jar $dst_dir/$name.epub
+if [ -f "$epubcheck_dir/epubcheck.jar" ]; then
+    java -jar "$epubcheck_dir/epubcheck.jar" "$dst_dir/$name.epub"
 else
     echo "Warning: could not find epubcheck.jar"
 fi
